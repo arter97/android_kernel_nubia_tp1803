@@ -39,7 +39,7 @@ int __initdata rd_doload;	/* 1 = load RAM disk, 0 = don't load */
 
 int root_mountflags = MS_RDONLY | MS_SILENT;
 static char * __initdata root_device_name;
-static char __initdata saved_root_name[64];
+static char __initdata saved_root_name[64] = "PARTLABEL=system";
 static int root_wait;
 
 dev_t ROOT_DEV;
@@ -375,6 +375,7 @@ done:
 }
 EXPORT_SYMBOL_GPL(name_to_dev_t);
 
+#if 0
 static int __init root_dev_setup(char *line)
 {
 	strlcpy(saved_root_name, line, sizeof(saved_root_name));
@@ -382,6 +383,7 @@ static int __init root_dev_setup(char *line)
 }
 
 __setup("root=", root_dev_setup);
+#endif
 
 static int __init rootwait_setup(char *str)
 {
@@ -650,7 +652,7 @@ void __init prepare_namespace(void)
 	wait_for_device_probe();
 
 	md_run_setup();
-	dm_run_setup();
+	// dm_run_setup();
 
 	if (saved_root_name[0]) {
 		root_device_name = saved_root_name;
