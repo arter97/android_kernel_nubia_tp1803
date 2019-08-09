@@ -223,4 +223,6 @@ source "drivers/esoc/Kconfig"
 
 source "drivers/nubia/Kconfig"
 
+source "techpack/data/drivers/Kconfig"
+
 endmenu
