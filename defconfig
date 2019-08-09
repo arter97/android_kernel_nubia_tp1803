@@ -5219,6 +5219,12 @@ CONFIG_NUBIA_SENSORS_TMD2725=y
 # CONFIG_NUBIA_SENSORS_IR_REMOTE_I_THREE is not set
 
 #
+# Qualcomm RmNet extensions
+#
+CONFIG_RMNET_PERF=y
+CONFIG_RMNET_SHS=y
+
+#
 # Firmware Drivers
 #
 CONFIG_ARM_PSCI_FW=y
