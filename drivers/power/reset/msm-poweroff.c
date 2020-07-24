@@ -63,7 +63,7 @@ static void scm_disable_sdi(void);
  * There is no API from TZ to re-enable the registers.
  * So the SDI cannot be re-enabled when it already by-passed.
  */
-static int download_mode = 1;
+static int download_mode = 0;
 static struct kobject dload_kobj;
 
 #ifdef CONFIG_QCOM_DLOAD_MODE
@@ -301,6 +301,7 @@ static void msm_restart_prepare(const char *cmd)
 	/* Hard reset the PMIC unless memory contents must be maintained. */
 	qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
 
+#if 0
 	if (cmd != NULL) {
 		if (!strncmp(cmd, "bootloader", 10)) {
 			qpnp_pon_set_restart_reason(
@@ -337,9 +338,10 @@ static void msm_restart_prepare(const char *cmd)
 		} else if (!strncmp(cmd, "edl", 3)) {
 			enable_emergency_dload_mode();
 		} else {
+#endif
 			__raw_writel(0x77665501, restart_reason);
-		}
-	}
+//		}
+//	}
 
 	flush_cache_all();
 
