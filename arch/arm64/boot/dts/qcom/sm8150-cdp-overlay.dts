@@ -30,3 +30,4 @@
 &dsi_sharp_4k_dsc_cmd_display {
 	qcom,dsi-display-active;
 };
+#include NUBIA_OVERWRITE_DTSI_FILE

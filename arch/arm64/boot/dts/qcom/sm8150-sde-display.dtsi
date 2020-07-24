@@ -439,7 +439,9 @@
 			&dsi_nt35695b_truly_fhd_video_display
 			&dsi_sw43404_amoled_video_display
 			&dsi_sw43404_amoled_fhd_plus_cmd_display
-			&dsi_dual_nt36850_truly_cmd_display>;
+			&dsi_dual_nt36850_truly_cmd_display
+			&dsi_lead_hx83112a_1080_2160_5p65_video_display
+			&dsi_jdi_hx83112a_1080_2160_5p65_video_display>;
 	};
 
 	sde_dsi1: qcom,dsi-display-secondary {
@@ -502,7 +504,7 @@
 };
 
 &mdss_mdp {
-	connectors = <&sde_rscc &sde_wb &sde_dp &sde_dsi &sde_dsi1>;
+	connectors = <&sde_rscc &sde_wb &sde_dp &sde_dsi>;
 };
 
 /* PHY TIMINGS REVISION T */

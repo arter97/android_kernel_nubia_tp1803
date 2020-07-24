@@ -72,32 +72,19 @@
 		"MADINPUT", "MCLK",
 		"hifi amp", "LINEOUT1",
 		"hifi amp", "LINEOUT2",
+		"AMIC1", "MIC BIAS1",
+		"MIC BIAS1", "Handset Mic",
 		"AMIC2", "MIC BIAS2",
 		"MIC BIAS2", "Headset Mic",
-		"AMIC3", "MIC BIAS2",
-		"MIC BIAS2", "ANCRight Headset Mic",
-		"AMIC4", "MIC BIAS2",
-		"MIC BIAS2", "ANCLeft Headset Mic",
-		"AMIC5", "MIC BIAS3",
-		"MIC BIAS3", "Handset Mic",
-		"DMIC0", "MIC BIAS1",
-		"MIC BIAS1", "Digital Mic0",
-		"DMIC1", "MIC BIAS1",
-		"MIC BIAS1", "Digital Mic1",
-		"DMIC2", "MIC BIAS3",
-		"MIC BIAS3", "Digital Mic2",
-		"DMIC3", "MIC BIAS3",
-		"MIC BIAS3", "Digital Mic3",
-		"DMIC4", "MIC BIAS4",
-		"MIC BIAS4", "Digital Mic4",
-		"DMIC5", "MIC BIAS4",
-		"MIC BIAS4", "Digital Mic5",
-		"SpkrLeft IN", "SPK1 OUT",
-		"SpkrRight IN", "SPK2 OUT";
+		"AMIC3", "MIC BIAS3",
+		"MIC BIAS3", "Secondary Mic";
 
-	qcom,msm-mbhc-hphl-swh = <1>;
-	qcom,msm-mbhc-gnd-swh = <1>;
-	qcom,msm-mbhc-hs-mic-max-threshold-mv = <1700>;
+	qcom,cdc-ext-amp-gpios = <&tlmm 100 0>;
+	qcom,msm-mbhc-hphl-swh = <0>;
+	qcom,msm-mbhc-gnd-swh = <0>;
+	qcom,msm-mbhc-usbc-audio-supported = <1>;
+	qcom,mbhc-audio-jack-type = "4-pole-jack";
+	qcom,msm-mbhc-hs-mic-max-threshold-mv = <2700>;
 	qcom,msm-mbhc-hs-mic-min-threshold-mv = <50>;
 	qcom,hph-en0-gpio = <&tavil_hph_en0>;
 	qcom,hph-en1-gpio = <&tavil_hph_en1>;
@@ -107,7 +94,7 @@
 	asoc-codec-names = "msm-stub-codec.1",
 			   "msm-ext-disp-audio-codec-rx";
 
-	qcom,wsa-max-devs = <2>;
+	qcom,wsa-max-devs = <0>;
 	qcom,wsa-devs = <&wsa881x_70211>, <&wsa881x_70212>,
 			<&wsa881x_70213>, <&wsa881x_70214>;
 	qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrRight",
@@ -290,10 +277,10 @@
 					   "cdc-vddpx-1",
 					   "cdc-vdd-3v3";
 
-		qcom,cdc-micbias1-mv = <1800>;
-		qcom,cdc-micbias2-mv = <1800>;
-		qcom,cdc-micbias3-mv = <1800>;
-		qcom,cdc-micbias4-mv = <1800>;
+		qcom,cdc-micbias1-mv = <2500>;
+		qcom,cdc-micbias2-mv = <2700>;
+		qcom,cdc-micbias3-mv = <2500>;
+		qcom,cdc-micbias4-mv = <2500>;
 
 		qcom,cdc-mclk-clk-rate = <9600000>;
 		qcom,cdc-slim-ifd = "tavil-slim-ifd";

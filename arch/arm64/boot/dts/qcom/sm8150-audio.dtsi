@@ -32,6 +32,7 @@
 	snd_9360: sound-pahu {
 		compatible = "qcom,sm8150-asoc-snd-pahu";
 		qcom,model = "sm8150-pahu-snd-card";
+		status = "disabled";
 
 		asoc-platform = <&pcm0>, <&pcm1>, <&pcm2>, <&voip>, <&voice>,
 				<&loopback>, <&compress>, <&hostless>,
@@ -157,9 +158,9 @@
 
 &qupv3_se4_i2c {
 	status = "ok";
-	fsa4480: fsa4480@43 {
+	fsa4480: fsa4480@42 {
 		compatible = "qcom,fsa4480-i2c";
-		reg = <0x43>;
+		reg = <0x42>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&fsa_usbc_ana_en>;
 	};

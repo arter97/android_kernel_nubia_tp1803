@@ -33,3 +33,4 @@
 &qupv3_se9_i2c {
 	status = "disabled";
 };
+#include NUBIA_OVERWRITE_DTSI_FILE
