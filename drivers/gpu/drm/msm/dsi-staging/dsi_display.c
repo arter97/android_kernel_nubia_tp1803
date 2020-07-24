@@ -2170,7 +2170,7 @@ end:
 	display->cmdline_timing = cmdline_timing;
 }
 
-static int nubia_panel_id = -1;
+int nubia_panel_id = -1;
 
 /**
  * dsi_display_parse_boot_display_selection()- Parse DSI boot display name

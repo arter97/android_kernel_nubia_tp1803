@@ -1,0 +1,11 @@
+config NUBIA_SENSORS_FP_SW6161
+	bool "NUBIA_TFINGERPRINT"
+	depends on NUBIA_FINGERPRINT
+	default n
+	help
+	  Say Y here if you want to enable NUBIA_TOUCHSCREENS
+	  If unsure, say N.
+
+if NUBIA_SENSORS_FP_SW6161
+source "drivers/nubia/fingerprint/sunwave_fp/Kconfig"
+endif

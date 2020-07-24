@@ -1,0 +1,59 @@
+#
+# Nubia drivers configuration
+#
+
+#menuconfig NUBIA_DRIVERS
+menu "nubia drivers"
+
+config NUBIA_DRIVERS
+	bool "NUBIA DRIVERS"
+	default n
+	help
+	  Say Y here if you want to enable NUBIA DRIVERS
+	  If unsure, say N.
+
+comment "Nubia Device Drivers"
+
+if NUBIA_DRIVERS
+# Add nubia drivers configuration here
+
+config NUBIA_TOUCHSCREENS
+	bool "NUBIA_TOUCHSCREENS"
+	depends on NUBIA_DRIVERS
+	default n
+	help
+	  Say Y here if you want to enable NUBIA_TOUCHSCREENS
+	  If unsure, say N.
+
+if NUBIA_TOUCHSCREENS
+source "drivers/nubia/touch/Kconfig"
+endif
+
+config NUBIA_FINGERPRINT
+	bool "NUBIA_TFINGERPRINT"
+	depends on NUBIA_DRIVERS
+	default n
+	help
+	  Say Y here if you want to enable NUBIA_TOUCHSCREENS
+	  If unsure, say N.
+
+if NUBIA_FINGERPRINT
+source "drivers/nubia/fingerprint/Kconfig"
+endif
+
+
+config NUBIA_SENSORS
+	bool "NUBIA_SENSORS"
+	depends on NUBIA_DRIVERS
+	default n
+	help
+	  Say Y here if you don't want to enable NUBIA_SENSORS
+	  If unsure, say N.
+
+if NUBIA_SENSORS
+source drivers/nubia/sensors/Kconfig
+endif
+
+endif
+
+endmenu
