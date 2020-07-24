@@ -65,7 +65,30 @@ static const struct drm_prop_enum_list e_qsync_mode[] = {
 	{SDE_RM_QSYNC_DISABLED,	"none"},
 	{SDE_RM_QSYNC_CONTINUOUS_MODE,	"continuous"},
 };
+#ifdef CONFIG_NUBIA_LCD_BACKLIGHT_CURVE
+int nubia_backlight_covert(struct dsi_display *display,
+                                      int value)
+{
+        u32 bl_lvl;
 
+        if(!display){
+                return -EINVAL;
+        }
+
+        pr_debug("before nubia backlight, value = %d\n",value);
+        if(value > 0){
+                bl_lvl =value * (display->panel->bl_config.bl_max_level -display->panel->bl_config.bl_min_level);
+                do_div(bl_lvl,display->panel->bl_config.brightness_max_level);
+                bl_lvl =value *bl_lvl;
+                do_div(bl_lvl,display->panel->bl_config.brightness_max_level);
+                bl_lvl += display->panel->bl_config.bl_min_level;
+        }else{
+                bl_lvl =0;
+        }
+        pr_debug("after nubia backlight, value = %d\n",bl_lvl);
+        return bl_lvl;
+}
+#endif
 static int sde_backlight_device_update_status(struct backlight_device *bd)
 {
 	int brightness;
@@ -86,11 +109,13 @@ static int sde_backlight_device_update_status(struct backlight_device *bd)
 	display = (struct dsi_display *) c_conn->display;
 	if (brightness > display->panel->bl_config.bl_max_level)
 		brightness = display->panel->bl_config.bl_max_level;
-
+#ifdef CONFIG_NUBIA_LCD_BACKLIGHT_CURVE
+	bl_lvl = nubia_backlight_covert(display,brightness);
+#else
 	/* map UI brightness into driver backlight level with rounding */
 	bl_lvl = mult_frac(brightness, display->panel->bl_config.bl_max_level,
 			display->panel->bl_config.brightness_max_level);
-
+#endif
 	if (!bl_lvl && brightness)
 		bl_lvl = 1;
 

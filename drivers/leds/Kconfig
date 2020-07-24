@@ -690,6 +690,12 @@ config LEDS_QTI_TRI_LED
 	  at max and each is controlled by a PWM channel used for dimming
 	  or blinking.
 
+config ZTEMT_BREATH_LEDS
+       tristate "LED support for Qualcomm Technologies, Inc. TRI_LED"
+        depends on LEDS_QTI_TRI_LED
+        help
+          This macro just for nubia led feature
+
 config LEDS_SYSCON
 	bool "LED support for LEDs on system controllers"
 	depends on LEDS_CLASS=y

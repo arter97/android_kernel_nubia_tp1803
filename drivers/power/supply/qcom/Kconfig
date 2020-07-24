@@ -94,6 +94,25 @@ config QPNP_QNOVO
 	  module. It also allows userspace code to read diagnostics of voltage
 	  and current measured during certain phases of the pulses.
 
+config NUBIA_CHARGE_FEATURE
+	bool "nubia charge feature support"
+	depends on SPMI
+	help
+	  Say Y here to enable nubia charge feature support.
+
+config NUBIA_POWEROFFCHARGE_NODE
+	bool "nubia poweroffcharge node support"
+	depends on SPMI
+	help
+	  Say Y here to enable nubia poweroffcharge node support.
+
+
+config NUBIA_CHARGE_DOCK_FEATURE
+	bool "nubia charge feature support"
+	depends on SPMI
+	help
+	  Say Y here to enable nubia charge feature support.
+
 config QPNP_QNOVO5
 	bool "QPNP QNOVO5 driver"
 	depends on MFD_SPMI_PMIC

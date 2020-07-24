@@ -242,6 +242,9 @@ struct fg_gen4_chip {
 	struct votable		*cp_disable_votable;
 	struct votable		*parallel_current_en_votable;
 	struct votable		*mem_attn_irq_en_votable;
+	#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	struct votable		*soc_monitor_work_votable;
+	#endif
 	struct work_struct	esr_calib_work;
 	struct alarm		esr_fast_cal_timer;
 	struct delayed_work	pl_enable_work;
@@ -1381,6 +1384,9 @@ static int fg_gen4_get_batt_profile(struct fg_dev *fg)
 	struct device_node *batt_node, *profile_node;
 	const char *data;
 	int rc, len, i, tuple_len, avail_age_level = 0;
+	#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	int temp=0;
+	#endif
 
 	batt_node = of_find_node_by_name(node, "qcom,battery-data");
 	if (!batt_node) {
@@ -1395,6 +1401,20 @@ static int fg_gen4_get_batt_profile(struct fg_dev *fg)
 	else
 		profile_node = of_batterydata_get_best_profile(batt_node,
 					fg->batt_id_ohms / 1000, NULL);
+
+	#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+        if (IS_ERR(profile_node) ||!profile_node){
+                rc = of_property_read_u32(node, "nubia,use-default-batt-id", &temp);
+                if(rc < 0)
+                        pr_err("get use-default-batt-id error\n");
+                else
+                        fg->batt_id_ohms = temp * 1000;
+
+                pr_err("couldn't find profile handle,use nubia default batt id =%d\n",temp);
+                profile_node = of_batterydata_get_best_profile(batt_node,
+                                temp, NULL);
+        }
+        #endif
 	if (IS_ERR(profile_node))
 		return PTR_ERR(profile_node);
 
@@ -2022,11 +2042,22 @@ done:
 	fg_notify_charger(fg);
 
 	schedule_delayed_work(&chip->ttf->ttf_work, msecs_to_jiffies(10000));
+
 	fg_dbg(fg, FG_STATUS, "profile loaded successfully");
 out:
 	if (chip->dt.multi_profile_load && rc < 0)
 		chip->batt_age_level = chip->last_batt_age_level;
 	fg->soc_reporting_ready = true;
+
+	#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	chip->soc_monitor_work_votable = find_votable("SOC_MONITOR");
+	if (chip->soc_monitor_work_votable == NULL) {
+		pr_err("NEO: can't find SOC_MONITOR votable\n");
+	} else {
+		vote(chip->soc_monitor_work_votable, "FG_PROFILE_VOTER", true, 0);
+	}
+	#endif
+
 	vote(fg->awake_votable, ESR_FCC_VOTER, true, 0);
 	schedule_delayed_work(&chip->pl_enable_work, msecs_to_jiffies(5000));
 	vote(fg->awake_votable, PROFILE_LOAD, false, 0);

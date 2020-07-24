@@ -345,6 +345,9 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_SERIAL_NUMBER,
 	POWER_SUPPLY_PROP_BATTERY_TYPE,
 	POWER_SUPPLY_PROP_CYCLE_COUNTS,
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	POWER_SUPPLY_PROP_LCD_ON,
+#endif
 };
 
 enum power_supply_type {

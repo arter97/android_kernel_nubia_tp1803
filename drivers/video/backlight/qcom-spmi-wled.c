@@ -2370,7 +2370,10 @@ static int wled_probe(struct platform_device *pdev)
 			rc);
 		return rc;
 	}
-
+//start full scale setting change need disable,re-enable to take effect.
+	wled_module_enable(wled, 0);
+	wled_module_enable(wled, 1);
+//end  full scale setting change need disable,re-enable to take effect.
 	return rc;
 }
 
